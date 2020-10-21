@@ -44,7 +44,7 @@ public class AppTest {
 	}
 	
 	@Test
-	public void testForIncorrectDelimiter() throws IOException {
+	public void testForIncorrectDelimiterOrHeader() throws IOException {
 		try {
 			StateCensusAnalyzer.loadCSVFile(StateCensusAnalyzer.indianCensusDataFalseHeader);
 		}
