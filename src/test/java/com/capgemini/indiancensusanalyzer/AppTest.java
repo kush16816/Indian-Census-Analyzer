@@ -34,7 +34,7 @@ public class AppTest {
 	@Test
 	public void testForIncorrectFileType() {
 		try {
-			if (StateCensusAnalyzer.indianCensusDataFalseType.endsWith("IndiaStatCensusData.csv")) {
+			if (StateCensusAnalyzer.indianCensusDataFalseType.endsWith("IndiaStateCensusData.csv")) {
 				StateCensusException stateCensusException = new StateCensusException(Type.TypeIncorrect);
 				throw stateCensusException;
 			}
@@ -70,6 +70,18 @@ public class AppTest {
 			}
 		} catch (StateCensusException stateCensusException) {
 			assertEquals(Type.FileNotFound, stateCensusException.type);
+		}
+	}
+	
+	@Test
+	public void testForIncorrectStateCodeFileType() {
+		try {
+			if (StateCensusAnalyzer.indianStateCodeFalseType.endsWith("IndiaStateCode.csv")) {
+				StateCensusException stateCensusException = new StateCensusException(Type.TypeIncorrect);
+				throw stateCensusException;
+			}
+		} catch (StateCensusException stateCensusException) {
+			assertEquals(Type.TypeIncorrect, stateCensusException.type);
 		}
 	}
 }
