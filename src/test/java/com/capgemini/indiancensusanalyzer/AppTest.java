@@ -59,4 +59,17 @@ public class AppTest {
 				.getCountStateCode(StateCensusAnalyzer.loadCSVStateCodeFile(StateCensusAnalyzer.indianStateCode));
 		assertEquals(37, result);
 	}
+	
+	@Test
+	public void testForIncorrectStateCodeFile() {
+		try {
+			if (Paths.get(
+					"src/main/resources/IndiaStateCode.csv") != StateCensusAnalyzer.indianStateCodeFalseCount) {
+				StateCensusException stateCensusException = new StateCensusException(Type.FileNotFound);
+				throw stateCensusException;
+			}
+		} catch (StateCensusException stateCensusException) {
+			assertEquals(Type.FileNotFound, stateCensusException.type);
+		}
+	}
 }
