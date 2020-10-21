@@ -84,4 +84,14 @@ public class AppTest {
 			assertEquals(Type.TypeIncorrect, stateCensusException.type);
 		}
 	}
+	
+	@Test
+	public void testForIncorrectStateCodeDelimiterOrHeader() throws IOException {
+		try {
+			StateCensusAnalyzer.loadCSVStateCodeFile(StateCensusAnalyzer.indianStateCodeFalseHeader);
+		}
+		catch (StateCensusException e) {
+			assertEquals(Type.IncorrectHeaderOrDelimiter, e.type);
+		}
+	}
 }
