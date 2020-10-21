@@ -52,4 +52,11 @@ public class AppTest {
 			assertEquals(Type.IncorrectHeaderOrDelimiter, e.type);
 		}
 	}
+	
+	@Test
+	public void testForCorrectNumberOfRecordsStateCode() throws IOException, StateCensusException {
+		int result = StateCensusAnalyzer
+				.getCountStateCode(StateCensusAnalyzer.loadCSVStateCodeFile(StateCensusAnalyzer.indianStateCode));
+		assertEquals(37, result);
+	}
 }
