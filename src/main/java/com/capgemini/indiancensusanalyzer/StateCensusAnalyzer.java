@@ -8,6 +8,8 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.stream.StreamSupport;
 
+import com.capgemini.indiancensusanalyzer.exception.StateCensusException;
+import com.capgemini.indiancensusanalyzer.exception.StateCensusException.Type;
 import com.capgemini.indiancensusanalyzer.model.CSVStateCensus;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -15,20 +17,21 @@ import com.opencsv.bean.CsvToBeanBuilder;
 public class StateCensusAnalyzer 
 {
 	static final Path indianCensusData = Paths.get("src/main/resources/IndiaStateCensusData.csv");
+	static final Path indianCensusDataFalseType = Paths.get("src/main/resources/IndiaStateCensusData.exe");
 	static final Path indianCensusDataFalseHeader = Paths.get("src/main/resources/IndiaStateCensusDataFalseHeader.csv");
 	static final Path indianCensusDataFalseCount = Paths.get("src/main/resources/IndiaStateCensusDataFalseCount.csv");
 	
-	public static Iterator<CSVStateCensus> loadCSVFile(Path censusData) throws IOException {
+	public static Iterator<CSVStateCensus> loadCSVFile(Path censusData) throws IOException, StateCensusException {
 		Reader reader = Files.newBufferedReader(censusData);
-		try {
+		try{
 			CsvToBean<CSVStateCensus> csvToBean = new CsvToBeanBuilder<CSVStateCensus>(reader).withType(CSVStateCensus.class)
-					.withIgnoreLeadingWhiteSpace(true).build();
-			Iterator<CSVStateCensus> stateCensusItr = csvToBean.iterator();
-			return stateCensusItr;
-		} catch (Exception e) {
-			e.getCause();
+				.withIgnoreLeadingWhiteSpace(true).build();
+		Iterator<CSVStateCensus> stateCensusItr = csvToBean.iterator();
+		return stateCensusItr;
 		}
-		return null;
+		catch (Exception e) {
+			throw new StateCensusException(Type.IncorrectHeaderOrDelimiter);
+		}
 	}
 	
 	public static int getCount(Iterator<CSVStateCensus> itr) {
