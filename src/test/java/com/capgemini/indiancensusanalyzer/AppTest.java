@@ -1,20 +1,17 @@
 package com.capgemini.indiancensusanalyzer;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
+
+import java.io.IOException;
 
 import org.junit.Test;
 
-/**
- * Unit test for simple App.
- */
 public class AppTest 
 {
-    /**
-     * Rigorous Test :-)
-     */
-    @Test
-    public void shouldAnswerWithTrue()
-    {
-        assertTrue( true );
-    }
+	@Test
+	public void testForCorrectNumberOfRecords() throws IOException {
+		int result = StateCensusAnalyzer
+				.getCount(StateCensusAnalyzer.loadCSVFile(StateCensusAnalyzer.indianCensusData));
+		assertEquals(29, result);
+	}
 }
